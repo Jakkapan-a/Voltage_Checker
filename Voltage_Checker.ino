@@ -12,13 +12,13 @@
 Adafruit_INA219 ina219_1(0x40);
 Adafruit_INA219 ina219_2(0x41);
 
-/*----------------- SET PINOUT 1-----------------*/
+/*----------------- SET OUTPUT 1-----------------*/
 #define PIN_LED_GREEN_1 5
 #define PIN_LED_RED_1 6
 
 TcPINOUT LED_GREEN_1(PIN_LED_GREEN_1);
 TcPINOUT LED_RED_1(PIN_LED_RED_1);
-/*----------------- SET PINOUT 1-----------------*/
+/*----------------- SET OUTPUT 1-----------------*/
 #define PIN_LED_GREEN_2 7
 #define PIN_LED_RED_2 8
 TcPINOUT LED_GREEN_2(PIN_LED_GREEN_2);

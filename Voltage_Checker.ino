@@ -29,8 +29,8 @@ TcPINOUT LED_RED_2(PIN_LED_RED_2);
 #define PIN_VL_2 A1
 /*----------------- VARIABLES -----------------*/
 
-const double current_limit = 80;
-const float voltage_limit = 150;
+const double current_limit = 80; // > 80 IS WORK
+const float voltage_limit = 250; // > 250 IS RED
 void setup() {
   Serial.begin(9600);
   ina219_1.begin();
@@ -40,24 +40,26 @@ void setup() {
 void loop() {
 
   /*------------- GET VALUE 1 -----------------*/
-  double current_sensor_1 = ina219_1.getCurrent_mA();  // Read current from  sensor 1
+  double current_sensor_1 = analogRead(A2); //ina219_1.getCurrent_mA();  // Read current from  sensor 1
   int sensorValue_1 = analogRead(PIN_VL_1);            // Read voltage from  sensor 1
   // float voltage_1 = sensorValue_1 * (5.0 / 1023.0);
   Serial.print("Current 1 : " + String(current_sensor_1));
-  Serial.println(" Voltage 1 : " + String(sensorValue_1));
+  Serial.print(", Voltage 1 : " + String(sensorValue_1));
   validateVoltage(current_sensor_1, sensorValue_1, LED_GREEN_1, LED_RED_1);
   /*-------------- GET VALUE 2 -----------------*/
-  double current_sensor_2 = ina219_2.getCurrent_mA();  // Read current from  sensor 2
+  double current_sensor_2 = analogRead(A3); //ina219_2.getCurrent_mA();  // Read current from  sensor 2
   int sensorValue_2 = analogRead(PIN_VL_2);            // Read voltage from  sensor 2
   // float voltage_2 = sensorValue_2 * (5.0 / 1023.0);
-  Serial.print("Current 2 : " + String(current_sensor_2));
-  Serial.println("Voltage 2 : " + String(sensorValue_2));
+  Serial.print(", Current 2 : " + String(current_sensor_2));
+  Serial.println(", Voltage 2 : " + String(sensorValue_2));
   validateVoltage(current_sensor_2, sensorValue_2 , LED_GREEN_2, LED_RED_2);
-  delay(50);
+  delay(100);
 }
 
 void validateVoltage(double input_current, float input_voltage, TcPINOUT LED_GREEN, TcPINOUT LED_RED) {
-  if (input_current > current_limit) {
+  
+//  Serial.print("Current : " + String(input_current) + ", > Limit :" + String(current_limit) );
+  if (input_current > current_limit && input_current != NAN) {
     // Check Voltage
     if (input_voltage < voltage_limit) {
       // LED Green on
